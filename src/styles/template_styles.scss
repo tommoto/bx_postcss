@@ -1,4 +1,5 @@
-@import "partials/_varivables.scss";
+@import "partials/normalize.scss";
+@import "partials/varivables.scss";
 
 /* Testing autoprefixer */
 .autoprefixer {
@@ -20,8 +21,29 @@
         color: #fff;
 
         &:hover {
-            color: $color
+            color: $color;
+        }
+
+        @media (width >= 500px) {
+            color: green;
         }
     }
 }
 
+.container
+{
+    lost-utility: clearfix;
+    lost-center: 1200px;
+}
+
+.item
+{
+    lost-column: 1/4;
+    height: 40px;
+    background: #acc;
+    margin-bottom: 10px;
+
+    @media (width >= 500px) {
+        lost-column: 1/3;
+    }
+}

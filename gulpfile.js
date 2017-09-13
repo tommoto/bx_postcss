@@ -1,19 +1,20 @@
 'use strict';
 
 // подключаем необходимые плагины
-var     gulp = require('gulp'),
-        postcss = require('gulp-postcss'),
-        util = require('gulp-util'), // различные утилиты
+var     gulp         = require('gulp'),
+        postcss      = require('gulp-postcss'),
+        util         = require('gulp-util'), // различные утилиты
         autoprefixer = require('autoprefixer'), // расстановка вендорных префиксов
-        cssnext = require('cssnext'), // использование возможностей будущего
-        browserSync	= require('browser-sync'), // сервер для перезагрузки браузера
-        precss = require('precss'), // замена scss
-        rename = require("gulp-rename"), // переименование файлов
-        sourcemaps = require('gulp-sourcemaps'), // карты кода, для отладки
-        stylelint = require('stylelint'), // проверка правильности написания стилей
-        rigger = require('gulp-rigger'), // простое склеивание файлов
-        fileinclude	= require('gulp-file-include'), // альтернативное склеивание файлов
-        cache = require('gulp-cached'); // кеширование файлов
+        cssnext      = require('cssnext'), // использование возможностей будущего
+        browserSync  = require('browser-sync'), // сервер для перезагрузки браузера
+        precss       = require('precss'), // замена scss
+        lost         = require('lost'), // сетка на calc()
+        rename       = require("gulp-rename"), // переименование файлов
+        sourcemaps   = require('gulp-sourcemaps'), // карты кода, для отладки
+        stylelint    = require('stylelint'), // проверка правильности написания стилей
+        rigger       = require('gulp-rigger'), // простое склеивание файлов
+        fileinclude  = require('gulp-file-include'), // альтернативное склеивание файлов
+        cache        = require('gulp-cached'); // кеширование файлов
 
 // переменная для работы с путями и расширениями
 var path = {
@@ -82,13 +83,19 @@ gulp.task('css', function () {
         }
     };
 
-    var processors = [stylelint(stylelintConfig), autoprefixer, cssnext, precss];
+    var processors = [
+            stylelint(stylelintConfig),
+            precss,
+            lost,
+            cssnext,
+            autoprefixer
+    ];
 
     return gulp.src(path.src.styles)
         .pipe(cache('linting'))
         .pipe(sourcemaps.init())
         .pipe(postcss(processors))
-        .pipe(rename(function (path) {
+         .pipe(rename(function (path) {
             if (path.extname = ".scss")
                 path.extname = ".css";
         }))
