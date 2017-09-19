@@ -92,7 +92,7 @@ gulp.task('css', function () {
     ];
 
     return gulp.src(path.src.styles)
-        .pipe(cache('linting'))
+        //.pipe(cache('linting'))
         .pipe(sourcemaps.init())
         .pipe(postcss(processors))
          .pipe(rename(function (path) {
@@ -116,7 +116,8 @@ gulp.task('js', function() {
         .pipe(cache('jsing'))
         .pipe(sourcemaps.init())
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(path.build.js));
+        .pipe(gulp.dest(path.build.js))
+        .pipe(browserSync.stream());
 });
 
 gulp.task('fonts', function() {
